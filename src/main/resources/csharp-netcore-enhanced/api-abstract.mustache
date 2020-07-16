@@ -24,10 +24,7 @@ namespace {{packageName}}.{{apiPackage}}
 
         [{{#vendorExtensions.httpAnnotation}}{{vendorExtensions.httpAnnotation}}("{{path}}"){{/vendorExtensions.httpAnnotation}}]
         {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
-        [{{#vendorExtensions.httpAnnotation}}{{vendorExtensions.httpAnnotation}}("{{path}}"){{/vendorExtensions.httpAnnotation}}]
-        ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
-
+        
     {{/operation}}
 
 {{/operations}}
