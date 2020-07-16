@@ -1,0 +1,35 @@
+{{>partial_header}}
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using {{packageName}}.Client;
+{{#hasImport}}using {{packageName}}.{{modelPackage}};
+{{/hasImport}}
+
+namespace {{packageName}}.{{apiPackage}}
+{
+{{#operations}}
+
+    {{>visibility}} abstract class Abstract{{classname}}Sync : {{interfacePrefix}}{{classname}}Sync
+    {
+
+        {{#serviceDefaultUrl}}
+        public static String DEFAULT_SERVICE_URL = "{{{serviceDefaultUrl}}}";
+        {{/serviceDefaultUrl}}
+    {{#operation}}
+
+        [{{#vendorExtensions.httpAnnotation}}{{vendorExtensions.httpAnnotation}}("{{path}}"){{/vendorExtensions.httpAnnotation}}]
+        {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+        [{{#vendorExtensions.httpAnnotation}}{{vendorExtensions.httpAnnotation}}("{{path}}"){{/vendorExtensions.httpAnnotation}}]
+        ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+    {{/operation}}
+
+{{/operations}}
+    }
+}
