@@ -23,7 +23,7 @@ namespace {{packageName}}.{{apiPackage}}
     {{#operation}}
 
         [{{#vendorExtensions.httpAnnotation}}{{vendorExtensions.httpAnnotation}}("{{path}}"){{/vendorExtensions.httpAnnotation}}]
-        abstract {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+        public abstract {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
     {{/operation}}
 
