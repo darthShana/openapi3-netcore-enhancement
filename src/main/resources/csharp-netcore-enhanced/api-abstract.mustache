@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
+using Microsoft.AspNetCore.Mvc;
+
 using {{packageName}}.Client;
 {{#hasImport}}using {{packageName}}.{{modelPackage}};
 {{/hasImport}}
@@ -14,18 +16,73 @@ namespace {{packageName}}.{{apiPackage}}
 {
 {{#operations}}
 
+    ///<Summary>
+    ///
+    ///</Summary>
     {{>visibility}} abstract class Abstract{{classname}}Sync : {{interfacePrefix}}{{classname}}Sync
     {
 
+        ///<Summary>
+        ///
+        ///</Summary>
         {{#serviceDefaultUrl}}
         public static String DEFAULT_SERVICE_URL = "{{{serviceDefaultUrl}}}";
         {{/serviceDefaultUrl}}
     {{#operation}}
 
+        ///<Summary>
+        ///
+        ///</Summary>
         [{{#vendorExtensions.httpAnnotation}}{{vendorExtensions.httpAnnotation}}("{{path}}"){{/vendorExtensions.httpAnnotation}}]
         public abstract {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
+        ///<Summary>
+        ///
+        ///</Summary>
+        public abstract ApiResponse<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}Object{{/returnType}}> {{operationId}}WithHttpInfo ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
     {{/operation}}
+
+        ///<Summary>
+        ///
+        ///</Summary>
+        public IReadableConfiguration Configuration
+        {
+        get { return ConfigurationImpl; }
+        set { ConfigurationImpl = value; }
+        }
+
+        ///<Summary>
+        ///
+        ///</Summary>
+        public abstract IReadableConfiguration ConfigurationImpl
+        {
+        get;
+        set;
+        }
+
+        ///<Summary>
+        ///
+        ///</Summary>
+        public ExceptionFactory ExceptionFactory
+        {
+        get { return ExceptionFactoryImpl; }
+        set { ExceptionFactoryImpl = value; }
+        }
+
+        ///<Summary>
+        ///
+        ///</Summary>
+        public abstract ExceptionFactory ExceptionFactoryImpl
+        {
+        get;
+        set;
+        }
+
+        ///<Summary>
+        ///
+        ///</Summary>
+        public abstract string GetBasePath();
 
 {{/operations}}
     }

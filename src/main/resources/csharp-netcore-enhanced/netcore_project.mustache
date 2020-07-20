@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -12,13 +12,13 @@
     <Description>{{packageDescription}}</Description>
     <Copyright>{{packageCopyright}}</Copyright>
     <RootNamespace>{{packageName}}</RootNamespace>
-    <Version>{{packageVersion}}</Version>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\{{packageName}}.xml</DocumentationFile>{{#licenseId}}
     <PackageLicenseExpression>{{licenseId}}</PackageLicenseExpression>{{/licenseId}}
     <RepositoryUrl>https://{{{gitHost}}}/{{{gitUserId}}}/{{{gitRepoId}}}.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>{{#releaseNote}}
     <PackageReleaseNotes>{{releaseNote}}</PackageReleaseNotes>{{/releaseNote}}{{#packageTags}}
     <PackageTags>{{{packageTags}}}</PackageTags>{{/packageTags}}
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
