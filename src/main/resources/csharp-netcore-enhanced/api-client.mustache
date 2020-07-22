@@ -1,0 +1,43 @@
+{{>partial_header}}
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using {{packageName}}.Client;
+{{#hasImport}}using {{packageName}}.{{modelPackage}};
+{{/hasImport}}
+
+namespace {{packageName}}.Client
+{
+    {{#operations}}
+
+    /// <summary>
+    /// Represents a collection of functions to interact with the API endpoints
+    /// </summary>
+    {{>visibility}} interface {{interfacePrefix}}{{classname}}ClientSync
+    {
+        {{#operation}}
+        /// <summary>
+        /// {{summary}}
+        /// </summary>
+        /// <remarks>
+        /// {{notes}}
+        /// </remarks>
+        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
+        {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}}</returns>
+        {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
+
+        {{/operation}}
+
+
+
+
+
+
+    {{/operations}}
+    }
+}

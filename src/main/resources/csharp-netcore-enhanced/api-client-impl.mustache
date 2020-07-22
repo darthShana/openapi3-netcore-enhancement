@@ -1,0 +1,82 @@
+{{>partial_header}}
+
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using {{packageName}}.Client;
+using {{packageName}}.Api;
+{{#hasImport}}using {{packageName}}.{{modelPackage}};
+{{/hasImport}}
+
+namespace {{packageName}}.Client
+{
+    {{#operations}}
+
+    /// <summary>
+    /// Represents a collection of functions to interact with the API endpoints
+    /// </summary>
+    {{>visibility}} class {{classname}}Client : {{interfacePrefix}}{{classname}}ClientSync
+    {
+
+        private ApiClient serviceClient;
+
+        /// <summary>
+        /// {{summary}}
+        /// </summary>
+        /// <remarks>
+        /// {{notes}}
+        /// </remarks>
+        public {{classname}}Client(String url)
+        {
+            serviceClient = new ApiClient(url);
+        }
+
+        /// <summary>
+        /// {{summary}}
+        /// </summary>
+        /// <remarks>
+        /// {{notes}}
+        /// </remarks>
+        public {{classname}}Client() : this(Abstract{{classname}}Sync.DEFAULT_SERVICE_URL)
+        {
+        }
+
+
+        {{#operation}}
+        /// <summary>
+        /// {{summary}}
+        /// </summary>
+        /// <remarks>
+        /// {{notes}}
+        /// </remarks>
+        /// <exception cref="{{packageName}}.Client.ApiException">Thrown when fails to make API call</exception>
+        {{#allParams}}/// <param name="{{paramName}}">{{description}}{{^required}} (optional{{#defaultValue}}, default to {{.}}{{/defaultValue}}){{/required}}</param>
+        {{/allParams}}/// <returns>{{#returnType}}{{returnType}}{{/returnType}}</returns>
+        public {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}})
+        {
+            RequestOptions options = new RequestOptions();
+            options.HeaderParameters.Add("Content-Type", "application/json");
+
+        {{#allParams}}
+            {{#isPathParam}}options.PathParameters.Add("{{paramName}}", {{paramName}});{{/isPathParam}}
+            {{#isQueryParam}}options.QueryParameters.Add("{{paramName}}", {{paramName}});{{/isQueryParam}}
+            {{#isBodyParam}}options.Data = {{paramName}};{{/isBodyParam}}
+        {{/allParams}}
+
+            ApiResponse<{{returnType}}> apiResponse = serviceClient.{{vendorExtensions.httpMethod}}<{{returnType}}>("{{path}}", options);
+            return apiResponse.Data;
+
+        }
+
+        {{/operation}}
+
+
+
+
+
+    {{/operations}}
+    }
+}

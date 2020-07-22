@@ -461,7 +461,7 @@ public class EnhacedNetCoreApiGenerator extends AbstractCSharpCodegen {
                             }
                         }
                     }
-                    operation.vendorExtensions.put("httpAnnotation", "Http"+camelize(operation.httpMethod.toLowerCase(), false));
+                    operation.vendorExtensions.put("httpMethod", camelize(operation.httpMethod.toLowerCase(), false));
                 }
             }
         }
@@ -624,6 +624,8 @@ public class EnhacedNetCoreApiGenerator extends AbstractCSharpCodegen {
         additionalProperties.put("binRelativePath", binRelativePath);
 
         apiTemplateFiles.put("api-abstract.mustache", ".cs");
+        apiTemplateFiles.put("api-client.mustache", ".cs");
+        apiTemplateFiles.put("api-client-impl.mustache", ".cs");
 
         supportingFiles.add(new SupportingFile("IApiAccessor.mustache", clientPackageDir, "IApiAccessor.cs"));
         supportingFiles.add(new SupportingFile("Configuration.mustache", clientPackageDir, "Configuration.cs"));
@@ -672,7 +674,17 @@ public class EnhacedNetCoreApiGenerator extends AbstractCSharpCodegen {
         if("api-abstract.mustache".equals(templateName)){
             return this.apiFileFolder() + '/' + "Abstract" + tag + suffix;
         }
+        if("api-client.mustache".equals(templateName)){
+            return this.clientFileFolder() + '/' + tag + "SyncClient" + suffix;
+        }
+        if("api-client-impl.mustache".equals(templateName)){
+            return this.clientFileFolder() + '/' + tag + "Client" + suffix;
+        }
         return super.apiFilename(templateName, tag);
+    }
+
+    public String clientFileFolder() {
+        return this.outputFolder + File.separator + this.sourceFolder + File.separator + this.packageName + File.separator + "Client";
     }
 
     public void setNetStandard(Boolean netStandard) {

@@ -19,7 +19,7 @@ namespace {{packageName}}.{{apiPackage}}
     ///<Summary>
     ///
     ///</Summary>
-    {{>visibility}} abstract class Abstract{{classname}}Sync : {{interfacePrefix}}{{classname}}Sync
+    {{>visibility}} abstract class Abstract{{classname}}Sync : ControllerBase, {{interfacePrefix}}{{classname}}Sync
     {
 
         ///<Summary>
@@ -33,7 +33,7 @@ namespace {{packageName}}.{{apiPackage}}
         ///<Summary>
         ///
         ///</Summary>
-        [{{#vendorExtensions.httpAnnotation}}{{vendorExtensions.httpAnnotation}}("{{path}}"){{/vendorExtensions.httpAnnotation}}]
+        [{{#vendorExtensions.httpMethod}}Http{{vendorExtensions.httpMethod}}("{{path}}"){{/vendorExtensions.httpMethod}}]
         public abstract {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}void{{/returnType}} {{operationId}} ({{#allParams}}{{{dataType}}} {{paramName}}{{^required}}{{#optionalMethodArgument}} = default({{{dataType}}}){{/optionalMethodArgument}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/allParams}});
 
         ///<Summary>
